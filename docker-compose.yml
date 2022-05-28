@@ -1,25 +1,25 @@
 version: "3.9"
 services:
-  # wt:
-  #   image: websoft/hcm:2021.4.3.406
-  #   container_name: wt
-  #   hostname: wt
-  #   # command: ./xhttp.out
-  #   command: tail -F ./xHttp.ini
-  #   volumes:
-  #    - ./webtutor/wt_data:/WebsoftServer/wt_data
-  #    - ./webtutor/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-  #    - ./webtutor/Logs:/WebsoftServer/Logs
-  #    - ./webtutor/ft-idx:/WebsoftServer/ft-idx
-  #    - ./webtutor/applications:/WebsoftServer/applications
-  #    - ./webtutor/xHttp.ini:/WebsoftServer/xHttp.ini
-  #    - ./webtutor/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
-  #   ports:
-  #     - 8080:8080
-  #   depends_on:
-  #     - mssql
-  #   networks:
-  #     - webtutor
+  wt:
+    image: websoft/hcm:2021.4.3.406
+    container_name: wt
+    hostname: wt
+    entrypoint: ./xhttp.out
+    # command: tail -F ./spxml_unibridge_config.xml
+    volumes:
+     - ./webtutor/wt_data:/WebsoftServer/wt_data
+     - ./webtutor/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+     - ./webtutor/Logs:/WebsoftServer/Logs
+     - ./webtutor/ft-idx:/WebsoftServer/ft-idx
+     - ./webtutor/applications:/WebsoftServer/applications
+     - ./webtutor/xHttp.ini:/WebsoftServer/xHttp.ini
+     - ./webtutor/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+    ports:
+      - 8080:8080
+    depends_on:
+      - mssql
+    networks:
+      - webtutor
 
   mssql:
     image: mcr.microsoft.com/mssql/server:2019-latest
