@@ -1,11 +1,10 @@
 version: "3.9"
 services:
   wt:
-    image: websoft/hcm:2021.4.3.406
+    image: $WEBTUTOR_IMAGE
     container_name: wt
     hostname: wt
-    entrypoint: ./xhttp.out
-    # command: tail -F ./spxml_unibridge_config.xml
+    entrypoint: /usr/config/entrypoint.sh
     volumes:
      - ./webtutor/wt_data:/WebsoftServer/wt_data
      - ./webtutor/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
@@ -14,31 +13,63 @@ services:
      - ./webtutor/applications:/WebsoftServer/applications
      - ./webtutor/xHttp.ini:/WebsoftServer/xHttp.ini
      - ./webtutor/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+     - ./config/wt:/usr/config
     ports:
       - 8080:8080
     depends_on:
-      - mssql
+      # - mssql
+      - postgres
+      - mailhog
     networks:
       - webtutor
 
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: mssql
-    hostname: mssql
-    entrypoint: /usr/config/entrypoint.sh
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=zH8vV@a4
-      - MSSQL_DB=WTDB
-      - MSSQL_USER=webtutor
-      - MSSQL_PASSWORD=webtutor
-    volumes:
-      - ./db/data:/var/opt/mssql/data
-      - ./db/log:/var/opt/mssql/log
-      - ./db/secrets:/var/opt/mssql/secrets
-      - ./config/db:/usr/config
+  mailhog:
+    image: $MAILHOG_IMAGE
+    container_name: mailhog
+    hostname: mailhog
     ports:
-      - 1433:1433
+      - 8025:8025
+    networks:
+      - webtutor
+
+  # mssql:
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   container_name: mssql
+  #   hostname: mssql
+  #   entrypoint:
+  #     - /usr/config/entrypoint.sh
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=zH8vV@a4
+  #   volumes:
+  #     - ./db/data:/var/opt/mssql/data
+  #     - ./db/log:/var/opt/mssql/log
+  #     - ./db/secrets:/var/opt/mssql/secrets
+  #     - ./config/db:/usr/config
+  #   ports:
+  #     - 1433:1433
+  #   networks:
+  #     - webtutor
+
+  postgres:
+    image: postgres:14.3
+    container_name: postgres
+    hostname: postgres
+    environment:
+      POSTGRES_PASSWORD: dev
+    volumes:
+      - ./db/postgres/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - webtutor
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    hostname: adminer
+    ports:
+      - 9000:8080
     networks:
       - webtutor
 
