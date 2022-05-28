@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  # wt:
+  #   image: websoft/hcm:2021.4.3.406
+  #   container_name: wt
+  #   hostname: wt
+  #   # command: ./xhttp.out
+  #   command: tail -F ./xHttp.ini
+  #   volumes:
+  #    - ./webtutor/wt_data:/WebsoftServer/wt_data
+  #    - ./webtutor/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+  #    - ./webtutor/Logs:/WebsoftServer/Logs
+  #    - ./webtutor/ft-idx:/WebsoftServer/ft-idx
+  #    - ./webtutor/applications:/WebsoftServer/applications
+  #    - ./webtutor/xHttp.ini:/WebsoftServer/xHttp.ini
+  #    - ./webtutor/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - mssql
+  #   networks:
+  #     - webtutor
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
+    hostname: mssql
+    entrypoint: /usr/config/entrypoint.sh
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=zH8vV@a4
+      - MSSQL_DB=WTDB
+      - MSSQL_USER=webtutor
+      - MSSQL_PASSWORD=webtutor
+    volumes:
+      - ./db/data:/var/opt/mssql/data
+      - ./db/log:/var/opt/mssql/log
+      - ./db/secrets:/var/opt/mssql/secrets
+      - ./config/db:/usr/config
+    ports:
+      - 1433:1433
+    networks:
+      - webtutor
+
+networks:
+  webtutor:
+    driver: bridge
