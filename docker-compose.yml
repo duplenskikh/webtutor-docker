@@ -4,7 +4,7 @@ services:
     image: $WEBTUTOR_IMAGE
     container_name: wt
     hostname: wt
-    entrypoint: /usr/config/entrypoint.sh
+    entrypoint: tail -f ./spxml_unibridge_config.xml
     volumes:
      - ./webtutor/wt_data:/WebsoftServer/wt_data
      - ./webtutor/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
@@ -15,7 +15,7 @@ services:
      - ./webtutor/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
      - ./config/wt:/usr/config
     ports:
-      - 8080:8080
+      - 4000:4000
     depends_on:
       # - mssql
       - postgres
@@ -28,50 +28,41 @@ services:
     container_name: mailhog
     hostname: mailhog
     ports:
-      - 8025:8025
+      - 1080:8025
     networks:
       - webtutor
 
-  # mssql:
-  #   image: mcr.microsoft.com/mssql/server:2019-latest
-  #   container_name: mssql
-  #   hostname: mssql
-  #   entrypoint:
-  #     - /usr/config/entrypoint.sh
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql
+    hostname: mssql
+    entrypoint:
+      - /usr/config/entrypoint.sh
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=zH8vV@a4
+    volumes:
+      - ./db/data:/var/opt/mssql/data
+      - ./db/log:/var/opt/mssql/log
+      - ./db/secrets:/var/opt/mssql/secrets
+      - ./config/db:/usr/config
+    ports:
+      - 1433:1433
+    networks:
+      - webtutor
+
+  # postgres:
+  #   image: postgres:14.3
+  #   container_name: postgres
+  #   hostname: postgres
   #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - SA_PASSWORD=zH8vV@a4
+  #     POSTGRES_PASSWORD: dev
   #   volumes:
-  #     - ./db/data:/var/opt/mssql/data
-  #     - ./db/log:/var/opt/mssql/log
-  #     - ./db/secrets:/var/opt/mssql/secrets
-  #     - ./config/db:/usr/config
+  #     - ./db/postgres/data:/var/lib/postgresql/data
   #   ports:
-  #     - 1433:1433
+  #     - 5432:5432
   #   networks:
   #     - webtutor
-
-  postgres:
-    image: postgres:14.3
-    container_name: postgres
-    hostname: postgres
-    environment:
-      POSTGRES_PASSWORD: dev
-    volumes:
-      - ./db/postgres/data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    networks:
-      - webtutor
-
-  adminer:
-    image: adminer:latest
-    container_name: adminer
-    hostname: adminer
-    ports:
-      - 9000:8080
-    networks:
-      - webtutor
 
 networks:
   webtutor:
