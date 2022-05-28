@@ -1,3 +1,4 @@
 hcm_*.tar*
 webtutor/
 db/**/*
+.DS_Store
