@@ -7,4 +7,4 @@
 /usr/config/configure-db.sh
 
 # Call extra command
-tail -F /var/opt/mssql/log/create_db_log.log
+tail -F /var/opt/mssql/log/setup*.log

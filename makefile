@@ -3,4 +3,7 @@ start:
 	docker-compose up --build -d
 
 stop:
-	docker-compose down
+	docker-compose stop && docker-compose down
+
+restart:
+	make stop && make start
