@@ -4,22 +4,19 @@ services:
     image: $WEBTUTOR_IMAGE
     container_name: wt
     hostname: wt
-    entrypoint: tail -f ./spxml_unibridge_config.xml
+    entrypoint: ./xhttp.out
     volumes:
-     - ./webtutor/wt_data:/WebsoftServer/wt_data
-     - ./webtutor/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-     - ./webtutor/Logs:/WebsoftServer/Logs
-     - ./webtutor/ft-idx:/WebsoftServer/ft-idx
-     - ./webtutor/applications:/WebsoftServer/applications
-     - ./webtutor/xHttp.ini:/WebsoftServer/xHttp.ini
-     - ./webtutor/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
-     - ./config/wt:/usr/config
+     - $WEBTUTOR_HOST_VOLUME/wt_data:/WebsoftServer/wt_data
+     - $WEBTUTOR_HOST_VOLUME/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+     - $WEBTUTOR_HOST_VOLUME/Logs:/WebsoftServer/Logs
+     - $WEBTUTOR_HOST_VOLUME/ft-idx:/WebsoftServer/ft-idx
+     - $WEBTUTOR_HOST_VOLUME/applications:/WebsoftServer/applications
+     - $WEBTUTOR_HOST_VOLUME/xHttp.ini:/WebsoftServer/xHttp.ini
+     - $WEBTUTOR_HOST_VOLUME/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
     ports:
-      - 4000:4000
+      - $WEBTUTOR_HOST_PORT:$WEBTUTOR_CONTAINER_PORT
     depends_on:
-      # - mssql
-      - postgres
-      - mailhog
+      - mssql
     networks:
       - webtutor
 
@@ -28,41 +25,26 @@ services:
     container_name: mailhog
     hostname: mailhog
     ports:
-      - 1080:8025
+      - $MAILHOG_HOST_PORT:$MAILHOG_CONTAINER_PORT
     networks:
       - webtutor
 
   mssql:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: $MSSQL_IMAGE
     container_name: mssql
     hostname: mssql
-    entrypoint:
-      - /usr/config/entrypoint.sh
+    user: root
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=zH8vV@a4
+      - SA_PASSWORD=$MSSQL_SA_PASSWORD
     volumes:
-      - ./db/data:/var/opt/mssql/data
-      - ./db/log:/var/opt/mssql/log
-      - ./db/secrets:/var/opt/mssql/secrets
-      - ./config/db:/usr/config
+      - $MSSQL_HOST_VOLUME:/var/opt/mssql/data
+      - $MSSQL_HOST_VOLUME:/var/opt/mssql/log
+      - $MSSQL_HOST_VOLUME:/var/opt/mssql/secrets
     ports:
-      - 1433:1433
+      - $MSSQL_HOST_PORT:$MSSQL_CONTAINER_PORT
     networks:
       - webtutor
-
-  # postgres:
-  #   image: postgres:14.3
-  #   container_name: postgres
-  #   hostname: postgres
-  #   environment:
-  #     POSTGRES_PASSWORD: dev
-  #   volumes:
-  #     - ./db/postgres/data:/var/lib/postgresql/data
-  #   ports:
-  #     - 5432:5432
-  #   networks:
-  #     - webtutor
 
 networks:
   webtutor:
