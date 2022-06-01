@@ -1,4 +1,4 @@
-# WebTutor
+# Запуск WebTutor в docker
 
 # До запуска
 1. Загружаем образ `WebTutor` в `docker` командой `docker load -i ${WEBTUTOR_IMAGE.tar.gz}`
