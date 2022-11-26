@@ -1,6 +1,5 @@
 hcm_*.tar*
-webtutor/
 .DS_Store
 .vscode
-scripts/
-mssql/
+mount
+webtutor
