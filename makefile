@@ -1,8 +1,8 @@
-start:
+up:
 	docker-compose up --build -d
 
-stop:
+down:
 	docker-compose stop && docker-compose down
 
-restart:
-	make stop && make start && echo 'All containers started'
+re:
+	make down && make up

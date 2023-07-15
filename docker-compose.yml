@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  websoft-hcm:
+  wt:
     image: $WEBTUTOR_IMAGE
     container_name: wt
     hostname: wt
@@ -9,6 +9,7 @@ services:
      - $WEBTUTOR_HOST_VOLUME/wt_data:/WebsoftServer/wt_data
      - $WEBTUTOR_HOST_VOLUME/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
      - $WEBTUTOR_HOST_VOLUME/wt/web/test:/WebsoftServer/wt/web/test
+     - $WEBTUTOR_HOST_VOLUME/xhttp_config.json:/WebsoftServer/xhttp_config.json
      - $WEBTUTOR_HOST_VOLUME/Logs:/WebsoftServer/Logs
      - $WEBTUTOR_HOST_VOLUME/ft-idx:/WebsoftServer/ft-idx
      - $WEBTUTOR_HOST_VOLUME/applications:/WebsoftServer/applications
@@ -16,62 +17,50 @@ services:
      - $WEBTUTOR_HOST_VOLUME/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
     ports:
       - $WEBTUTOR_HOST_PORT:$WEBTUTOR_CONTAINER_PORT
-    depends_on:
-      - mssql
+    # depends_on:
+    #   - mssql
     networks:
       - webtutor
 
-  mailhog:
-    image: $MAILHOG_IMAGE
-    container_name: mailhog
-    hostname: mailhog
-    ports:
-      - $MAILHOG_HOST_PORT:$MAILHOG_CONTAINER_PORT
-    depends_on:
-      - websoft-hcm
-    networks:
-      - webtutor
-
-  mssql:
-    image: $MSSQL_IMAGE
-    container_name: mssql
-    hostname: mssql
-    user: root
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=$MSSQL_SA_PASSWORD
-      - MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD
-    ports:
-      - $MSSQL_HOST_PORT:$MSSQL_CONTAINER_PORT
-    networks:
-      - webtutor
-
-  mssql-tools:
-    image: $MSSQL_TOOLS_IMAGE
-    container_name: mssql-tools
-    entrypoint: $MSSQL_TOOLS_CONTAINER_VOLUME/entry.sh
-    volumes:
-      - $MSSQL_TOOLS_HOST_VOLUME:$MSSQL_TOOLS_CONTAINER_VOLUME
-    depends_on:
-      - mssql
-    networks:
-      - webtutor
-
-  # db:
-  #   image: $POSTGRES_IMAGE
-  #   container_name: db
-  #   hostname: db
-  #   environment:
-  #     - POSTGRES_USER=$POSTGRES_USER
-  #     - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-  #     - POSTGRES_DB=$POSTGRES_DB
+  # mailhog:
+  #   image: $MAILHOG_IMAGE
+  #   container_name: mailhog
+  #   hostname: mailhog
   #   ports:
-  #     - $POSTGRES_HOST_PORT:$POSTGRES_CONTAINER_PORT
+  #     - $MAILHOG_HOST_PORT:$MAILHOG_CONTAINER_PORT
+  #   depends_on:
+  #     - wt
+  #   networks:
+  #     - webtutor
+
+  # mssql:
+  #   image: $MSSQL_IMAGE
+  #   container_name: mssql
+  #   hostname: mssql
+  #   user: root
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=$MSSQL_SA_PASSWORD
+  #     - MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD
+  #   ports:
+  #     - $MSSQL_HOST_PORT:$MSSQL_CONTAINER_PORT
+  #   networks:
+  #     - webtutor
+
+  # mssql-tools:
+  #   image: $MSSQL_TOOLS_IMAGE
+  #   container_name: mssql-tools
+  #   entrypoint: $MSSQL_TOOLS_CONTAINER_VOLUME/entry.sh
   #   volumes:
-  #     - $PGDATA:/var/lib/postgresql/data
+  #     - $MSSQL_TOOLS_HOST_VOLUME:$MSSQL_TOOLS_CONTAINER_VOLUME
+  #   depends_on:
+  #     - mssql
   #   networks:
   #     - webtutor
 
 networks:
   webtutor:
     driver: bridge
+
+volumes:
+  webtutor-sql:
