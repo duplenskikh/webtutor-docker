@@ -2,43 +2,49 @@ version: "3.9"
 
 services:
   wt:
-    image: websoft/hcm:2023.1.649_REL
-    container_name: wt
-    hostname: wt
-    entrypoint: ./xhttp.out
-    volumes:
-     - ./wt/wt_data:/WebsoftServer/wt_data
-     - ./wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-     - ./wt/wt/web/test:/WebsoftServer/wt/web/test
-     - ./wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
-     - ./wt/Logs:/WebsoftServer/Logs
-     - ./wt/ft-idx:/WebsoftServer/ft-idx
-     - ./wt/applications:/WebsoftServer/applications
-     - ./wt/xHttp.ini:/WebsoftServer/xHttp.ini
-     - ./wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+    build:
+      context: ./docker/wt
+      dockerfile: Dockerfile
+
+    # volumes:
+      # - wt/wt_data:/WebsoftServer/wt_data
+      # - wt/wt/web/webtutor:/WebsoftServer/wt_data
+      # - wt/wet/web/dapi:/WebsoftServer/wt_data
+      # - wt/xhttp_config.json:/WebsoftServer/wt_data
+      # - wt:/WebsoftServer/wt_data
+      # - wt:/WebsoftServer/wt_data
+    #  - ./wt/wt_data:/WebsoftServer/wt_data
+    #  - ./wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+    #  - ./wt/wt/web/test:/WebsoftServer/wt/web/test
+    #  - ./wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
+    #  - ./wt/Logs:/WebsoftServer/Logs
+    #  - ./wt/ft-idx:/WebsoftServer/ft-idx
+    #  - ./wt/applications:/WebsoftServer/applications
+    #  - ./wt/xHttp.ini:/WebsoftServer/xHttp.ini
+    #  - ./wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
     ports:
       - 8080:8011
-    depends_on:
-      - wtdb
+    # depends_on:
+    #   - wtdb
     networks:
-      - webtutor
+      - wt
 
   wtdb:
-    image: mcr.microsoft.com/mssql/server
-    container_name: mssql
-    hostname: mssql
-    user: root
+    image: mcr.microsoft.com/azure-sql-edge
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=yourStrong(!)Password
+      - SA_PASSWORD=yourStrong(!)Password
     ports:
       - 1433:1433
     networks:
-      - webtutor
+      - wtdb
+    volumes:
+      - wtdb:/var/opt/mssql
 
 networks:
-  webtutor:
-    driver: bridge
+  wt:
+  wtdb:
 
 volumes:
-  webtutor-sql:
+  wt:
+  wtdb:
