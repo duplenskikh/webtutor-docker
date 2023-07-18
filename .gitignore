@@ -1,5 +1,3 @@
-hcm_*.tar*
 .DS_Store
 .vscode
-mount
-webtutor
+wt

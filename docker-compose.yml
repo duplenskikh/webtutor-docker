@@ -1,62 +1,40 @@
 version: "3.9"
+
 services:
   wt:
-    image: $WEBTUTOR_IMAGE
+    image: websoft/hcm:2023.1.649_REL
     container_name: wt
     hostname: wt
     entrypoint: ./xhttp.out
     volumes:
-     - $WEBTUTOR_HOST_VOLUME/wt_data:/WebsoftServer/wt_data
-     - $WEBTUTOR_HOST_VOLUME/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-     - $WEBTUTOR_HOST_VOLUME/wt/web/test:/WebsoftServer/wt/web/test
-     - $WEBTUTOR_HOST_VOLUME/xhttp_config.json:/WebsoftServer/xhttp_config.json
-     - $WEBTUTOR_HOST_VOLUME/Logs:/WebsoftServer/Logs
-     - $WEBTUTOR_HOST_VOLUME/ft-idx:/WebsoftServer/ft-idx
-     - $WEBTUTOR_HOST_VOLUME/applications:/WebsoftServer/applications
-     - $WEBTUTOR_HOST_VOLUME/xHttp.ini:/WebsoftServer/xHttp.ini
-     - $WEBTUTOR_HOST_VOLUME/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+     - ./wt/wt_data:/WebsoftServer/wt_data
+     - ./wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+     - ./wt/wt/web/test:/WebsoftServer/wt/web/test
+     - ./wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
+     - ./wt/Logs:/WebsoftServer/Logs
+     - ./wt/ft-idx:/WebsoftServer/ft-idx
+     - ./wt/applications:/WebsoftServer/applications
+     - ./wt/xHttp.ini:/WebsoftServer/xHttp.ini
+     - ./wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
     ports:
-      - $WEBTUTOR_HOST_PORT:$WEBTUTOR_CONTAINER_PORT
-    # depends_on:
-    #   - mssql
+      - 8080:8011
+    depends_on:
+      - wtdb
     networks:
       - webtutor
 
-  # mailhog:
-  #   image: $MAILHOG_IMAGE
-  #   container_name: mailhog
-  #   hostname: mailhog
-  #   ports:
-  #     - $MAILHOG_HOST_PORT:$MAILHOG_CONTAINER_PORT
-  #   depends_on:
-  #     - wt
-  #   networks:
-  #     - webtutor
-
-  # mssql:
-  #   image: $MSSQL_IMAGE
-  #   container_name: mssql
-  #   hostname: mssql
-  #   user: root
-  #   environment:
-  #     - ACCEPT_EULA=Y
-  #     - SA_PASSWORD=$MSSQL_SA_PASSWORD
-  #     - MSSQL_SA_PASSWORD=$MSSQL_SA_PASSWORD
-  #   ports:
-  #     - $MSSQL_HOST_PORT:$MSSQL_CONTAINER_PORT
-  #   networks:
-  #     - webtutor
-
-  # mssql-tools:
-  #   image: $MSSQL_TOOLS_IMAGE
-  #   container_name: mssql-tools
-  #   entrypoint: $MSSQL_TOOLS_CONTAINER_VOLUME/entry.sh
-  #   volumes:
-  #     - $MSSQL_TOOLS_HOST_VOLUME:$MSSQL_TOOLS_CONTAINER_VOLUME
-  #   depends_on:
-  #     - mssql
-  #   networks:
-  #     - webtutor
+  wtdb:
+    image: mcr.microsoft.com/mssql/server
+    container_name: mssql
+    hostname: mssql
+    user: root
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=yourStrong(!)Password
+    ports:
+      - 1433:1433
+    networks:
+      - webtutor
 
 networks:
   webtutor:
