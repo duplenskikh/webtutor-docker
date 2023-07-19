@@ -17,9 +17,9 @@ services:
       - ${PWD}/wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
 
       # dapi
-      - ${PWD}/wt/wet/web/dapi:/WebsoftServer/wt/web/dapi
+      - ${PWD}/wt/wt/web/dapi:/WebsoftServer/wt/web/dapi
     ports:
-      - 8080:8011
+      - 80:80
     depends_on:
       - wtdb
     networks:
