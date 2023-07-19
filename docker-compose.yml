@@ -1,45 +1,43 @@
 version: "3.9"
 
 services:
-  wt:
-    build:
-      context: ./docker/wt
-      dockerfile: Dockerfile
-
-    # volumes:
-      # - wt/wt_data:/WebsoftServer/wt_data
-      # - wt/wt/web/webtutor:/WebsoftServer/wt_data
-      # - wt/wet/web/dapi:/WebsoftServer/wt_data
-      # - wt/xhttp_config.json:/WebsoftServer/wt_data
-      # - wt:/WebsoftServer/wt_data
-      # - wt:/WebsoftServer/wt_data
-    #  - ./wt/wt_data:/WebsoftServer/wt_data
-    #  - ./wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-    #  - ./wt/wt/web/test:/WebsoftServer/wt/web/test
-    #  - ./wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
-    #  - ./wt/Logs:/WebsoftServer/Logs
-    #  - ./wt/ft-idx:/WebsoftServer/ft-idx
-    #  - ./wt/applications:/WebsoftServer/applications
-    #  - ./wt/xHttp.ini:/WebsoftServer/xHttp.ini
-    #  - ./wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
-    ports:
-      - 8080:8011
-    # depends_on:
-    #   - wtdb
-    networks:
-      - wt
+  # wt:
+  #   image: websoft/hcm:2022.2.3.531
+  #   entrypoint: tail -f /dev/null
+  #   # volumes:
+  #   #   - ./docker/wt/entrypoint.sh:/WebSoftServer/entrypoint.sh
+  #     # - wt/wt_data:/WebsoftServer/wt_data
+  #     # - wt/wt/web/webtutor:/WebsoftServer/wt_data
+  #     # - wt/wet/web/dapi:/WebsoftServer/wt_data
+  #     # - wt/xhttp_config.json:/WebsoftServer/wt_data
+  #     # - wt:/WebsoftServer/wt_data
+  #     # - wt:/WebsoftServer/wt_data
+  #   #  - ./wt/wt_data:/WebsoftServer/wt_data
+  #   #  - ./wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+  #   #  - ./wt/wt/web/test:/WebsoftServer/wt/web/test
+  #   #  - ./wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
+  #   #  - ./wt/Logs:/WebsoftServer/Logs
+  #   #  - ./wt/ft-idx:/WebsoftServer/ft-idx
+  #   #  - ./wt/applications:/WebsoftServer/applications
+  #   #  - ./wt/xHttp.ini:/WebsoftServer/xHttp.ini
+  #   #  - ./wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+  #   ports:
+  #     - 8080:8011
+  #   depends_on:
+  #     - wtdb
+  #   networks:
+  #     - wt
 
   wtdb:
-    image: mcr.microsoft.com/azure-sql-edge
+    image: postgres
+    restart: always
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=yourStrong(!)Password
-    ports:
-      - 1433:1433
-    networks:
-      - wtdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
     volumes:
-      - wtdb:/var/opt/mssql
+      - ./docker/db/create_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    ports:
+      - 5432:5432
 
 networks:
   wt:
