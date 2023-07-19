@@ -2,18 +2,22 @@ version: "3.9"
 
 services:
   wt:
-    image: websoft/hcm:2022.2.3.531
-    entrypoint: tail -f /dev/null
+    image: websoft/hcm:2023.1.649_REL
+    entrypoint: ./xhttp.out
     volumes:
-      - ${pwd}/wt/wt_data:/WebsoftServer/wt_data
-      - ${pwd}/wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-      - ${pwd}/wt/wet/web/dapi:/WebsoftServer/wt/web/dapi
-      - ${pwd}/wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
-      - ${pwd}/wt/Logs:/WebsoftServer/Logs
-      - ${pwd}/wt/ft-idx:/WebsoftServer/ft-idx
-      - ${pwd}/wt/applications:/WebsoftServer/applications
-      - ${pwd}/wt/xHttp.ini:/WebsoftServer/xHttp.ini
-      - ${pwd}/wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+      - ${PWD}/wt/wt_data:/WebsoftServer/wt_data
+      - ${PWD}/wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+      - ${PWD}/wt/Logs:/WebsoftServer/Logs
+      - ${PWD}/wt/ft-idx:/WebsoftServer/ft-idx
+      - ${PWD}/wt/applications:/WebsoftServer/applications
+      
+      # config files
+      # - ${PWD}/wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
+      - ${PWD}/wt/xHttp.ini:/WebsoftServer/xHttp.ini
+      - ${PWD}/wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+
+      # dapi
+      - ${PWD}/wt/wet/web/dapi:/WebsoftServer/wt/web/dapi
     ports:
       - 8080:8011
     depends_on:
