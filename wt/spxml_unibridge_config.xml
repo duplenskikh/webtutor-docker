@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <appSettings>
     <add key="LogDirectory" value="Logs" />
@@ -24,7 +24,7 @@
     <add key="LocalFileCache" value="False" />
     <add key="XQueryTemplateCache" value="True" />
     <add key="LinkedCatalogsSchemaDeletions" value="True" />
-    <add key="UpgradeLocked" value="false" />
+    <add key="UpgradeLocked" value="False" />
     <add key="DataStorage" value="False" />
     <add key="InPlaceUpgrade" value="False" />
     <add key="Collation" value="" />
