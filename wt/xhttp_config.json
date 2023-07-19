@@ -1,0 +1,33 @@
+{
+  "Kestrel": {
+    "EndPoints": {
+      "Http": {
+        "Url": "http://*:[PORT]"
+      }
+    },
+    "Limits": {
+      "MaxConcurrentConnections": 800,
+      "MaxConcurrentUpgradedConnections": 800,
+      "MaxRequestBodySize": 536870912,
+      "MaxRequestHeaderCount": 100
+    }
+  },
+  "WorkerThreads": {
+    "MinWorkerThreads": "750",
+    "MinIOCThreads": "1000",
+    "MaxWorkerThreads": "0",
+    "MaxIOCThreads": "0"
+  },
+  "AllowedHosts": [
+    "localhost",
+    "*"
+  ],
+  "ResponseHeadersRules": [
+    {
+      "Host": "*",
+      "Remove": [
+        "Server"
+      ]
+    }
+  ]
+}

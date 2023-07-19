@@ -12,7 +12,7 @@ services:
       - ${PWD}/wt/applications:/WebsoftServer/applications
       
       # config files
-      # - ${PWD}/wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
+      - ${PWD}/wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
       - ${PWD}/wt/xHttp.ini:/WebsoftServer/xHttp.ini
       - ${PWD}/wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
 
