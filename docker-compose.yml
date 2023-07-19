@@ -3,7 +3,7 @@ version: "3.9"
 services:
   wt:
     image: websoft/hcm:2023.1.649_REL
-    entrypoint: ./xhttp.out
+    entrypoint: tail -f /dev/null
     volumes:
       - ${PWD}/wt/wt_data:/WebsoftServer/wt_data
       - ${PWD}/wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
