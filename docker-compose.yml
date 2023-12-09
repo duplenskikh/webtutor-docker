@@ -2,25 +2,25 @@ version: "3.9"
 
 services:
   wt:
-    image: websoft/hcm:2023.1.649_REL
+    image: websoft/hcm:2022.2.3.531
     entrypoint: tail -f /dev/null
     volumes:
-      - ${PWD}/wt/wt_data:/WebsoftServer/wt_data
-      - ${PWD}/wt/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-      - ${PWD}/wt/Logs:/WebsoftServer/Logs
-      - ${PWD}/wt/ft-idx:/WebsoftServer/ft-idx
-      - ${PWD}/wt/applications:/WebsoftServer/applications
-      # - ${PWD}/wt/xHttp.ini:/WebsoftServer/xHttp.ini
-      # - ${PWD}/wt/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
-      # - ${PWD}/wt/xhttp_config.json:/WebsoftServer/xhttp_config.json
+      - wt_data/wt_data:/WebsoftServer/wt_data
+      - wt_data/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
+      - wt_data/Logs:/WebsoftServer/Logs
+      - wt_data/ft-idx:/WebsoftServer/ft-idx
+      - wt_data/applications:/WebsoftServer/applications
+      - wt_data/xHttp.ini:/WebsoftServer/xHttp.ini
+      - wt_data/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
+      - wt_data/xhttp_config.json:/WebsoftServer/xhttp_config.json
     ports:
       - 80:80
     depends_on:
-      - wtdb
+      - db
     networks:
       - wt
 
-  wtdb:
+  db:
     image: postgres
     restart: always
     environment:
@@ -28,13 +28,24 @@ services:
       - POSTGRES_PASSWORD=root
     volumes:
       - ./misc/create_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - wtdb_postgresql_data:/var/lib/postgresql/data
+
     ports:
-      - 5432:5432
+      - 5433:5432
+    networks:
+      - wt
+
+  mail:
+    image: axllent/mailpit
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - wt
 
 networks:
   wt:
-  wtdb:
 
 volumes:
-  wt:
-  wtdb:
+  wt_data:
+  wtdb_postgresql_data:
