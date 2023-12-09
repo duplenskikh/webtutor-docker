@@ -5,14 +5,11 @@ services:
     image: websoft/hcm:2022.2.3.531
     entrypoint: tail -f /dev/null
     volumes:
-      - wt_data/wt_data:/WebsoftServer/wt_data
-      - wt_data/wt/web/webtutor:/WebsoftServer/wt/web/webtutor
-      - wt_data/Logs:/WebsoftServer/Logs
-      - wt_data/ft-idx:/WebsoftServer/ft-idx
-      - wt_data/applications:/WebsoftServer/applications
-      - wt_data/xHttp.ini:/WebsoftServer/xHttp.ini
-      - wt_data/spxml_unibridge_config.xml:/WebsoftServer/spxml_unibridge_config.xml
-      - wt_data/xhttp_config.json:/WebsoftServer/xhttp_config.json
+      - wt_data:/WebsoftServer/wt_data
+      - wt_webtutor:/WebsoftServer/wt/web/webtutor
+      - wt_logs:/WebsoftServer/Logs
+      - wt_idxs:/WebsoftServer/ft-idx
+      - wt_apps:/WebsoftServer/applications
     ports:
       - 80:80
     depends_on:
@@ -27,9 +24,8 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
     volumes:
-      - ./misc/create_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./misc/create_postgresql_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
       - wtdb_postgresql_data:/var/lib/postgresql/data
-
     ports:
       - 5433:5432
     networks:
@@ -48,4 +44,8 @@ networks:
 
 volumes:
   wt_data:
+  wt_webtutor:
+  wt_logs:
+  wt_idxs:
+  wt_apps:
   wtdb_postgresql_data:
