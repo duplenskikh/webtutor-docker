@@ -5,7 +5,7 @@
 1. Загружаем образ **WebTutor** в **docker** командой `docker load -i ${путь_до_образа}`
 2. Запускаем контейнеры командой `docker-compose up -d`
 3. Исполняем sql скрипт **misc/create_postgresql_db.sql** в бд
-4. Подключаемся к контейнеру **WebTutor** и запускаем __./xhttp.out__ настраиваем на работу с postgresql через **x-shell**
+4. Подключаемся к контейнеру **WebTutor**, запускаем __./xhttp.out__ и настраиваем на работу с postgresql через **x-shell**
 
 ## Работа
 
