@@ -1,23 +1,17 @@
-# Запуск WebTutor в docker
+# WebTutor в docker
 
-## До запуска
+## Установка
 
-1. Загружаем образ `WebTutor` в `docker` командой `docker load -i ${WEBTUTOR_IMAGE.tar.gz}`
-2. Настраиваем `.env` файл
-
-## Запуск
-
-1. Запускаем контейнеры командой `make start`
-2. Создаем схему в БД для WebTutor
-3. Создаем пользователя в БД для работы из под `WebTutor`
-4. Подключаемся к контейнеру `WebTutor` и настраиваем на работу с необходимой БД через `x-shell`
-5. Перезагружаем контейнер с `WebTutor` с помощью `docker-compose restart wt`
+1. Загружаем образ **WebTutor** в **docker** командой `docker load -i ${путь_до_образа}`
+2. Запускаем контейнеры командой `docker-compose up -d`
+3. Исполняем sql скрипт **misc/create_postgresql_db.sql** в бд
+4. Подключаемся к контейнеру **WebTutor** и запускаем __./xhttp.out__ настраиваем на работу с postgresql через **x-shell**
 
 ## Работа
 
-1. База доступна по порту `MSSQL_HOST_PORT`
-2. `WebTutor` доступен по порту `WEBTUTOR_HOST_PORT`
-3. `mailhog` доступен по порту `MAILHOG_HOST_PORT`
+1. **postgresdb** доступна по порту __5433__
+2. **WebTutor** доступен по порту __80__
+3. **mailpit** доступен по порту __8025__
 
 ## Подключение к контейнеру docker
 
