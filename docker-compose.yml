@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   wt:
-    image: websoft/hcm:2022.2.3.531
+    image: websoft/hcm:2023.2.803_DEV
     entrypoint: tail -f /dev/null
     volumes:
       - wt_data:/WebsoftServer/wt_data
@@ -17,7 +17,7 @@ services:
     networks:
       - wt
 
-  db:
+  postgresql:
     image: postgres
     restart: always
     environment:
@@ -28,6 +28,17 @@ services:
       - wtdb_postgresql_data:/var/lib/postgresql/data
     ports:
       - 5433:5432
+    networks:
+      - wt
+
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=yourStrong(!)Password
+    ports:
+      - 1434:1433
     networks:
       - wt
 
