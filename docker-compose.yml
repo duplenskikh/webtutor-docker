@@ -12,8 +12,6 @@ services:
       - wt_apps:/WebsoftServer/applications
     ports:
       - 80:80
-    depends_on:
-      - db
     networks:
       - wt
 
