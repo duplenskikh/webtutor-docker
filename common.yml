@@ -6,14 +6,3 @@ services:
       - 8025:8025
     networks:
       - wt
-
-networks:
-  wt:
-
-volumes:
-  wt_data:
-  wt_webtutor:
-  wt_logs:
-  wt_idxs:
-  wt_apps:
-  wtdb_postgresql_data:
