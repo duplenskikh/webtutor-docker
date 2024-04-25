@@ -1,18 +1,20 @@
-# WebTutor в docker
+# WebSoft HCM в Docker
 
 ## Установка
 
-1. Загружаем образ **WebTutor** в **docker** командой `docker load -i ${путь_до_образа}`
-2. Запускаем контейнеры командой `docker-compose up -d`
-3. Исполняем sql скрипт **misc/create_postgresql_db.sql** в бд
-4. Подключаемся к контейнеру **WebTutor**, запускаем __./xhttp.out__ и настраиваем на работу с postgresql через **x-shell**
+1. Установить [Docker](https://www.docker.com/products/docker-desktop)
+2. Скачать образ **WebSoft HCM**
+2. Загрузить образ **WebSoft HCM** в **docker** командой `docker load -i {path_to_image}`
+3. Запустить необходимую конфигурацию контейнеров `docker compose -f {compose_configuration_file_path} up -d`
+5. Подключиться к контейнеру **WebSoft HCM**
+6. Настроить неоходимую БД (дополнительные скрипты в директории **misc**) через утилиту __./xhttp.out__
 
 ## Работа
 
-1. **postgresdb** доступна по порту __5433__
-2. **WebTutor** доступен по порту __80__
+1. **postgresdb** доступна по порту __5433__ / **mssql** доступна по порту __1434__
+2. **WebSoft HCM** доступен по порту __80__
 3. **mailpit** доступен по порту __8025__
 
 ## Подключение к контейнеру docker
 
-Можно произвести командой `docker exec -it wt bash`
+Подключиться к контейнеру можно командой `docker exec -it wt bash`
