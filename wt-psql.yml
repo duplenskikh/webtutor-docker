@@ -1,8 +1,14 @@
+name: wt-psql
+
 services:
   wt:
     extends:
       file: wt.yml
-      service: wt-base
+      service: wt
+    ports:
+      - 81:80
+    networks:
+      - wt
 
   postgresql:
     image: postgres
@@ -17,10 +23,13 @@ services:
     networks:
       - wt
 
-  mail:
-    extends:
-      file: common.yml
-      service: mail
+  email:
+    image: axllent/mailpit
+    ports:
+      - 1026:1025
+      - 8026:8025
+    networks:
+      - wt
 
 networks:
   wt:

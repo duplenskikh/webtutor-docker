@@ -1,5 +1,5 @@
 services:
-  wt-test:
+  wt:
     image: websoft/hcm:2023.2.868_DEV
     # image: websoft/hcm:2023.2.803_DEV
     entrypoint: tail -f /dev/null
@@ -9,18 +9,3 @@ services:
       - wt_logs:/WebsoftServer/Logs
       - wt_idxs:/WebsoftServer/ft-idx
       - wt_apps:/WebsoftServer/applications
-    ports:
-      - 80:80
-    networks:
-      - wt
-
-networks:
-  wt:
-
-volumes:
-  wt_data:
-  wt_webtutor:
-  wt_logs:
-  wt_idxs:
-  wt_apps:
-  wtdb_postgresql_data:
