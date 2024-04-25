@@ -1,0 +1,34 @@
+services:
+  wt:
+    extends:
+      file: wt.yml
+      service: wt-base
+
+  postgresql:
+    image: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - ./misc/create_postgresql_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - wtdb_postgresql_data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    networks:
+      - wt
+
+  mail:
+    extends:
+      file: common.yml
+      service: mail
+
+networks:
+  wt:
+
+volumes:
+  wt_data:
+  wt_webtutor:
+  wt_logs:
+  wt_idxs:
+  wt_apps:
+  wtdb_postgresql_data:

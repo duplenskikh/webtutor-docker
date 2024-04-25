@@ -1,0 +1,31 @@
+services:
+  wt:
+    extends:
+      file: wt.yml
+      service: wt-base
+
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=yourStrong(!)Password
+    ports:
+      - 1434:1433
+    networks:
+      - wt
+
+  mail:
+    extends:
+      file: common.yml
+      service: mail
+
+networks:
+  wt:
+
+volumes:
+  wt_data:
+  wt_webtutor:
+  wt_logs:
+  wt_idxs:
+  wt_apps:
+  wtdb_postgresql_data:
