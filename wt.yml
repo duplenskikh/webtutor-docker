@@ -1,7 +1,6 @@
 services:
   wt:
-    image: websoft/hcm:2023.2.868_DEV
-    # image: websoft/hcm:2023.2.803_DEV
+    image: websoft/hcm:2023.2.906_DEV
     entrypoint: tail -f /dev/null
     volumes:
       - wt_data:/WebsoftServer/wt_data
