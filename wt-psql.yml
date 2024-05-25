@@ -19,7 +19,7 @@ services:
       - ./misc/create_postgresql_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
       - wtdb_postgresql_data:/var/lib/postgresql/data
     ports:
-      - 5433:5432
+      - 5432:5432
     networks:
       - wt
 
