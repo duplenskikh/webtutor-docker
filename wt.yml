@@ -1,7 +1,7 @@
 services:
   wt:
     image: websoft/hcm:2023.2.916
-    entrypoint: tail -f /dev/null
+    entrypoint: ./xhttp.out
     volumes:
       - wt_data:/WebsoftServer/wt_data
       - wt_webtutor:/WebsoftServer/wt/web/webtutor

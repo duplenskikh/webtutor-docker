@@ -5,14 +5,19 @@ services:
     extends:
       file: wt.yml
       service: wt
+    depends_on:
+      sql-tools:
+        condition: service_completed_successfully
+        restart: true
     ports:
       - 80:80
 
   mssql:
     image: mcr.microsoft.com/azure-sql-edge:latest
+    env_file: .env
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=yourStrong(!)Password
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     volumes:
       - ./misc/backup:/var/opt/mssql/backup
     ports:
@@ -20,8 +25,11 @@ services:
 
   sql-tools:
     image: mcr.microsoft.com/mssql-tools:latest
-    # entrypoint: tail -f /dev/null
+    env_file: .env
     entrypoint: /tmp/restore.sh
+    environment:
+      - MSSQL_USERNAME=${MSSQL_USERNAME}
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     volumes:
       - ./misc/restore/:/tmp
 
