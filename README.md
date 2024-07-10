@@ -18,3 +18,12 @@
 ## Подключение к контейнеру docker
 
 Подключиться к контейнеру можно командой `docker exec -it wt bash`
+
+## Создание контейнера WT под MSSQL
+
+1. Запускаешь **docker compose -f wt-mssql.yml -d up**
+2. Подключиться к контейнеру **docker exec -ti {WT_container} bash**
+3. Запустить **./xhttp.out**
+4. Установить тип БД MSSQL **db set type mssql** (адрес сервера указывать **host.docker.internal**)
+5. Исполнить файл в БД **misc/create_mssql_db.sql**
+6. Запустить миграцию данных с XML БД **db migrate from xml**
