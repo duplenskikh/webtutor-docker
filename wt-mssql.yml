@@ -1,4 +1,4 @@
-name: wt-mssql
+name: wt-mssql-test-db
 
 services:
   wt:
@@ -7,29 +7,29 @@ services:
       service: wt
     ports:
       - 80:80
-    networks:
-      - wt
 
   mssql:
     image: mcr.microsoft.com/azure-sql-edge:latest
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=yourStrong(!)Password
+    volumes:
+      - ./misc/backup:/var/opt/mssql/backup
     ports:
       - 1433:1433
-    networks:
-      - wt
+
+  sql-tools:
+    image: mcr.microsoft.com/mssql-tools:latest
+    # entrypoint: tail -f /dev/null
+    entrypoint: /tmp/restore.sh
+    volumes:
+      - ./misc/restore/:/tmp
 
   email:
     image: axllent/mailpit
     ports:
       - 1025:1025
       - 8025:8025
-    networks:
-      - wt
-
-networks:
-  wt:
 
 volumes:
   wt_data:
