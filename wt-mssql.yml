@@ -19,7 +19,7 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     volumes:
-      - ./misc/backup:/var/opt/mssql/backup
+      - ./misc/mssql/backup:/var/opt/mssql/backup
     ports:
       - 1433:1433
 
@@ -31,7 +31,7 @@ services:
       - MSSQL_USERNAME=${MSSQL_USERNAME}
       - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     volumes:
-      - ./misc/restore/:/tmp
+      - ./misc/mssql/:/tmp
 
   email:
     image: axllent/mailpit
