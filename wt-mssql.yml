@@ -1,4 +1,4 @@
-name: wt-mssql-test-db
+name: wt-mssql
 
 services:
   wt:
