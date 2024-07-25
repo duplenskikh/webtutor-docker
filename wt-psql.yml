@@ -17,7 +17,7 @@ services:
       - POSTGRES_PASSWORD=root
     volumes:
       - ./misc/create_postgresql_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
-      - wtdb_postgresql_data:/var/lib/postgresql/data
+      - wtdb-postgresql-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     networks:
@@ -35,9 +35,5 @@ networks:
   wt:
 
 volumes:
-  wt_data:
-  wt_webtutor:
-  wt_logs:
-  wt_idxs:
-  wt_apps:
-  wtdb_postgresql_data:
+  wtdb-postgresql-data:
+    name: "wtdb-postgresql-data"

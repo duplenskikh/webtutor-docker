@@ -40,8 +40,13 @@ services:
       - 8025:8025
 
 volumes:
-  wt_data:
-  wt_webtutor:
-  wt_logs:
-  wt_idxs:
-  wt_apps:
+  wt-data:
+    name: "wt-data"
+  wt-webtutor:
+    name: "wt-webtutor"
+  wt-logs:
+    name: "wt-logs"
+  wt-idxs:
+    name: "wt-idxs"
+  wt-apps:
+    name: "wt-apps"

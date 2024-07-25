@@ -3,8 +3,21 @@ services:
     image: websoft/hcm:2023.2.916
     entrypoint: ./xhttp.out
     volumes:
-      - wt_data:/WebsoftServer/wt_data
-      - wt_webtutor:/WebsoftServer/wt/web/webtutor
-      - wt_logs:/WebsoftServer/Logs
-      - wt_idxs:/WebsoftServer/ft-idx
-      - wt_apps:/WebsoftServer/applications
+      - ./misc/wt:/tmp/wt
+      - wt-data:/WebsoftServer/wt_data
+      - wt-webtutor:/WebsoftServer/wt/web/webtutor
+      - wt-logs:/WebsoftServer/Logs
+      - wt-idxs:/WebsoftServer/ft-idx
+      - wt-apps:/WebsoftServer/applications
+
+volumes:
+  wt-data:
+    name: "wt-data"
+  wt-webtutor:
+    name: "wt-webtutor"
+  wt-logs:
+    name: "wt-logs"
+  wt-idxs:
+    name: "wt-idxs"
+  wt-apps:
+    name: "wt-apps"
