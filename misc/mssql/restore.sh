@@ -1,6 +1,6 @@
 #!/bin/bash
 
-timeout=10
+timeout=3
 
 while true;
 do
