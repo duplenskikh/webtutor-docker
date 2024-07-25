@@ -1,7 +1,7 @@
 services:
   wt:
     image: websoft/hcm:2023.2.916
-    entrypoint: ./xhttp.out
+    entrypoint: /tmp/wt/start.sh
     volumes:
       - ./misc/wt:/tmp/wt
       - wt-data:/WebsoftServer/wt_data
