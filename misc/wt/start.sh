@@ -1,67 +1,63 @@
 #!/bin/bash
 
-# apt-get install -y expect
-apt-get install -y socat
+# if [ -f .env ]; then
+#   . .env
+# fi
 
-if [ -f .env ]; then
-  . .env
-fi
+# log_file=/tmp/xhttp_stdout.log
 
-# xhttp_fifo_in=/tmp/xhttp_fifo_in
-# xhttp_fifo_out=/tmp/xhttp_fifo_out
+# ./xhttp.out > $log_file 2>&1 &
 
-# mkfifo $xhttp_fifo_in
-# mkfifo $xhttp_fifo_out
+# xhttp_pid=$!
 
-./xhttp.out < /tmp/mytty > /tmp/mytty &
-xhttp_pid=$!
+# echo "xhttp.out has started with pid $xhttp_pid"
 
-echo "xhttp.out has started with pid $xhttp_pid"
+# wait_for_output() {
+#     local expected_output=$1
+#     echo "The main process awaits of input $expected_output"
 
-wait_for_output() {
-    local expected_output=$1
-    echo "The main process awaits of input $expected_output"
-
-    while read line; do
-        echo $line
-
-        if echo $line | grep -q "$expected_output"; then
-            echo "Output $expected_output found"
-            break
-        fi
-    done < /tmp/mytty
-}
-
-configure_db() {
-    echo "Database configuration has started"
-
-    echo "db set type mssql" > /tmp/mytty
-    wait_for_output "Change database type"
-    echo "y" > /tmp/mytty
-    wait_for_output "Server"
-    echo "host.docker.internal" > /tmp/mytty
-    wait_for_output "Database"
-    echo "WTDB" > /tmp/mytty
-    wait_for_output "Username"
-    echo "sa" > /tmp/mytty
-    wait_for_output "Password"
-    echo "yourStrong(!)Password" > /tmp/mytty
-    wait_for_output "Commit changes"
-    echo "y" > /tmp/mytty
-    wait_for_output "Database Type mssql set"
-}
-
-# migrate_db() {
-#     echo "Database migration has started"
-
-#     echo "db migrate from xml" > /proc/$xhttp_pid/fd/0
-#     wait_for_output "Migrate database from"
-#     echo "y" > /proc/$xhttp_pid/fd/0
+#     tail -f "$log_file" | while IFS= read -r line
+#     do
+#         echo "$line"
+#         if [[ "$line" == *"$expected_output"* ]]; then
+#             echo "Target line found: $line"
+#             # Kill the tail process
+#             pkill -P $$ tail
+#             break
+#         fi
+#     done
 # }
 
-echo "" >> $xhttp_fifo_in
-wait_for_output "Server started"
+# configure_db() {
+#     echo "Database configuration has started"
 
-configure_db
-# migrate_db
-# rm $xhttp_fifo_in $xhttp_fifo_out
+#     echo "db set type mssql" > /proc/$xhttp_pid/fd/0
+#     wait_for_output "Change database type"
+#     # echo "y" > /tmp/mytty
+#     # wait_for_output "Server"
+#     # echo "host.docker.internal" > /tmp/mytty
+#     # wait_for_output "Database"
+#     # echo "WTDB" > /tmp/mytty
+#     # wait_for_output "Username"
+#     # echo "sa" > /tmp/mytty
+#     # wait_for_output "Password"
+#     # echo "yourStrong(!)Password" > /tmp/mytty
+#     # wait_for_output "Commit changes"
+#     # echo "y" > /tmp/mytty
+#     # wait_for_output "Database Type mssql set"
+# }
+
+# # migrate_db() {
+# #     echo "Database migration has started"
+# # #     echo "db migrate from xml" > /proc/$xhttp_pid/fd/0
+# # #     wait_for_output "Migrate database from"
+# # #     echo "y" > /proc/$xhttp_pid/fd/0
+
+# # }
+
+# wait_for_output "Server started"
+
+# configure_db
+# # # migrate_db
+
+tail -f /dev/null
