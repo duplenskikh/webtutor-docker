@@ -1,6 +1,6 @@
 services:
   wt:
-    image: websoft/hcm:2023.2.916
+    image: ${WT_IMAGE}
     entrypoint: /tmp/wt/start.sh
     env_file: .env
     environment:

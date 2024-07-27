@@ -22,7 +22,12 @@ if [ -e "/tmp/backup/db.bak" ]; then
   /opt/mssql-tools/bin/sqlcmd -S host.docker.internal -U $MSSQL_USERNAME -P $MSSQL_SA_PASSWORD -Q 'RESTORE DATABASE WTDB FROM DISK = "/var/opt/mssql/backup/db.bak" WITH MOVE "WTDB" TO "/var/opt/mssql/data/WTDB.mdf", MOVE "BLOBS" TO "/var/opt/mssql/data/WTDB_blobs.mdf", MOVE "FT_IDX" TO "/var/opt/mssql/data/WTDB_ft_idx.mdf", MOVE "IDX" TO "/var/opt/mssql/data/WTDB_idx.mdf", MOVE "LOG" TO "/var/opt/mssql/data/T1_WTDB.ldf"' || exit 1
 else
   echo "Start database creating"
-  /opt/mssql-tools/bin/sqlcmd -S host.docker.internal -U $MSSQL_USERNAME -P $MSSQL_SA_PASSWORD -i "/tmp/create_db.sql" || exit 1
+
+  /opt/mssql-tools/bin/sqlcmd -S host.docker.internal -U sa -P ${MSSQL_SA_PASSWORD} -Q "SELECT name FROM sys.database WHERE name = 'WTDB'"
+
+  if [ $? -eq 1 ]; then
+    /opt/mssql-tools/bin/sqlcmd -S host.docker.internal -U $MSSQL_USERNAME -P $MSSQL_SA_PASSWORD -i "/tmp/create.sql" || exit 1
+  fi
 fi
 
 

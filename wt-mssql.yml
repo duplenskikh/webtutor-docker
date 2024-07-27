@@ -10,7 +10,7 @@ services:
         condition: service_completed_successfully
         restart: true
     ports:
-      - 80:80
+      - ${WT_HOST_PORT}:${WT_DOCKER_PORT}
 
   mssql:
     image: mcr.microsoft.com/azure-sql-edge:latest
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./misc/mssql/backup:/var/opt/mssql/backup
     ports:
-      - 1433:1433
+      - ${MSSQL_HOST_PORT}:${MSSQL_DOCKER_PORT}
 
   sql-tools:
     image: mcr.microsoft.com/mssql-tools:latest
@@ -36,8 +36,8 @@ services:
   email:
     image: axllent/mailpit
     ports:
-      - 1025:1025
-      - 8025:8025
+      - ${MAILPIT_HOST_SMTP_PORT}:${MAILPIT_DOCKER_SMTP_PORT}
+      - ${MAILPIT_HOST_UI_PORT}:${MAILPIT_DOCKER_UI_PORT}
 
 volumes:
   wt-data:

@@ -1,4 +1,4 @@
-name: wt-psql
+name: wt-postgres
 
 services:
   wt:
@@ -10,14 +10,14 @@ services:
     networks:
       - wt
 
-  postgresql:
+  postgres:
     image: postgres
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
     volumes:
-      - ./misc/create_postgresql_db.sql:/docker-entrypoint-initdb.d/create_tables.sql
-      - wtdb-postgresql-data:/var/lib/postgresql/data
+      - ./misc/create.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - wtdb-postgres-data:/var/lib/postgres/data
     ports:
       - 5432:5432
     networks:
@@ -35,5 +35,5 @@ networks:
   wt:
 
 volumes:
-  wtdb-postgresql-data:
-    name: "wtdb-postgresql-data"
+  wtdb-postgres-data:
+    name: "wtdb-postgres-data"
