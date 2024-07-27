@@ -2,6 +2,10 @@ services:
   wt:
     image: websoft/hcm:2023.2.916
     entrypoint: /tmp/wt/start.sh
+    env_file: .env
+    environment:
+      - MSSQL_USERNAME=${MSSQL_USERNAME}
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
     volumes:
       - ./misc/wt:/tmp/wt
       - wt-data:/WebsoftServer/wt_data

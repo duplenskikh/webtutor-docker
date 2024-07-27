@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="LogDirectory" value="Logs" />
+    <add key="LookFailedUrlsOnDisk" value="true" />
+    <add key="FetchBackFoundUrlsOnDisk" value="true" />
+    <add key="SharedConnection" value="false" />
+    <add key="ConnectionString" value="Server=host.docker.internal" />
+    <add key="DBType" value="MSSQL" />
+    <add key="Username" value="sa" />
+    <add key="Password" value="yourStrong(!)Password" />
+    <add key="Database" value="WTDB" />
+    <add key="TrashDatabase" value="" />
+    <add key="Mode" value="Normal" />
+    <add key="DateFormat" value="dmy" />
+    <add key="Schema" value="" />
+    <!-- tuning start -->
+    <add key="XmlPrimaryIndex" value="false" />
+    <add key="XmlSecondaryIndex" value="false" />
+    <!-- tuning end -->
+    <add key="PreventNonIndexOrder" value="false" />
+    <add key="SqlInjection" value="true" />
+    <add key="LocalObjectCache" value="false" />
+    <add key="LocalFileCache" value="false" />
+    <add key="XQueryTemplateCache" value="true" />
+    <add key="LinkedCatalogsSchemaDeletions" value="true" />
+    <add key="UpgradeLocked" value="false" />
+    <add key="DataStorage" value="false" />
+
+
+    <add key="InPlaceUpgrade" value="false" />
+    <add key="Collation" value="" />
+    <add key="LuceneFTIndex" value="true" />
+    <add key="LuceneFTIndexBlobs" value="true" />
+    <add key="LuceneFTAnalyzerSpecialChars" value="./-_\~':;,?#@!$%^&amp;*()+=|[]{}&gt;&lt;&quot;№" />
+    <add key="SharedFTDirectory" value="/WebsoftServer/wt_data/..\FT" />
+    <add key="CacheEnabled" value="true" />
+    <add key="CacheMaxMemoryItemLenBytes" value="8388608" />
+    <add key="CacheMemoryLimitPercentage" value="20" />
+    <add key="CacheTime" value="30" />
+    <add key="IndexOptimizerMode" value="none" />
+    <add key="InnerJoin" value="true" />
+    <add key="LocalObjectCacheTime" value="30" />
+    <add key="LocalObjectClientCache" value="false" />
+  </appSettings>
+</configuration>
