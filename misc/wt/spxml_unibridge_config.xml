@@ -7,8 +7,8 @@
     <add key="SharedConnection" value="false" />
     <add key="ConnectionString" value="Server=host.docker.internal" />
     <add key="DBType" value="MSSQL" />
-    <add key="Username" value="sa" />
-    <add key="Password" value="yourStrong(!)Password" />
+    <add key="Username" value="$SQL_USERNAME" />
+    <add key="Password" value="$SQL_PASSWORD" />
     <add key="Database" value="WTDB" />
     <add key="TrashDatabase" value="" />
     <add key="Mode" value="Normal" />
